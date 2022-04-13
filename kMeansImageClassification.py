@@ -62,6 +62,18 @@ def read_csv():
     data = pandas.read_csv("data_set.csv")
     x=3
 
+def create_csv_file(file_name,header):
+    
+    
+    f = open(file_name,'w',newline='')
+
+    #writer = csv.DictWriter(f, fieldnames=header)
+    writer= csv.writer(f)
+    
+    writer.writerow(header)
+    
+        
+    f.close()
     
     
 def populate_futures_2(image_list, class_name,dataset_file_name):
@@ -74,7 +86,7 @@ def populate_futures_2(image_list, class_name,dataset_file_name):
 
     df[class_name] = temp_list
     
-    df.to_csv("data_set.csv", index=False)      
+    df.to_csv(dataset_file_name, index=False)      
             
     
 def read_image(file_name):
@@ -96,7 +108,7 @@ def read_image(file_name):
     
     
     # Preprosessing--- burda pixel sayısı 4'ye indirilir.
-    recovered_image = compress_image(pixels, 4, 10)
+    recovered_image = compress_image(pixels, 4, 5)
 
     
     return recovered_image
@@ -134,6 +146,13 @@ def main():
     
     # Print dataset folders
     print("Dataset folders: ", dataSetFolders)
+
+    
+    dataset_file_name = "data_set.csv"
+
+
+    if not os.path.exists(dataset_file_name):
+        create_csv_file(dataset_file_name, dataSetFolders)
     
     image_list = {}
     # Get inside whole folders and read all file         
@@ -149,7 +168,6 @@ def main():
         print("################################\n")
         
         
-        dataset_file_name = "data_set.csv"
         
         if True:
             populate_futures_2(image_list, dir_name,dataset_file_name)

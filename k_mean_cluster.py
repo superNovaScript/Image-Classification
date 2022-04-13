@@ -136,9 +136,11 @@ class kMeans:
             centroids = self.update_centroids(min_indexes,pixels)
         
         min_indexes = np.array([min_indexes])
-        min_indexes= min_indexes.T
         min_indexes= min_indexes.astype(int)
         recovered_pixels = centroids[min_indexes] 
+        recovered_pixels = recovered_pixels.reshape((recovered_pixels.shape[0]*recovered_pixels.shape[1])
+                                                    , recovered_pixels.shape[2])
+
         return recovered_pixels   
             
     
